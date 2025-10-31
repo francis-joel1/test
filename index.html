@@ -8,11 +8,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
         :root {
-            --primary: #4a00e0;
-            --secondary: #8e2de2;
-            --accent: #ff6b6b;
-            --light: #f8f9fa;
-            --dark: #212529;
+            --primary: #4da6ff;
+            --secondary: #66b3ff;
+            --accent: #3399ff;
+            --light: #f0f8ff;
+            --dark: #2c3e50;
+            --text: #333333;
+        }
+        
+        body {
+            color: var(--text);
+            background-color: #f9f9f9;
         }
         
         .gradient-bg {
@@ -22,20 +28,36 @@
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border: none;
+            color: white;
         }
         
         .btn-primary:hover {
             background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+        }
+        
+        .btn-outline-primary {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: white;
         }
         
         .card {
             transition: transform 0.3s;
             border: none;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
         }
         
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-7px);
+            box-shadow: 0 8px 20px rgba(77, 166, 255, 0.2);
         }
         
         .event-poster {
@@ -49,7 +71,7 @@
         }
         
         .seat-map {
-            background-color: #f8f9fa;
+            background-color: var(--light);
             border-radius: 10px;
             padding: 20px;
             min-height: 300px;
@@ -58,7 +80,7 @@
         .qr-code {
             width: 200px;
             height: 200px;
-            background-color: #f8f9fa;
+            background-color: var(--light);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -87,7 +109,7 @@
             justify-content: center;
             align-items: center;
             color: white;
-            border-radius: 0.375rem;
+            border-radius: 12px;
             z-index: 10;
         }
         
@@ -96,11 +118,120 @@
         }
         
         .logged-in .user-info {
-            display: block;
+            display: flex;
         }
         
-        .logged-in .auth-buttons {
-            display: none;
+        .text-primary {
+            color: var(--primary) !important;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .hero-section {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+        }
+        
+        .category-badge {
+            background-color: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .price-tag {
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+        
+        .featured-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--accent);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 5;
+        }
+        
+        .event-card {
+            position: relative;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        .filter-btn.active {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+        
+        .payment-option {
+            transition: all 0.3s;
+        }
+        
+        .payment-option:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .ticket-card {
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .ticket-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem;
+        }
+        
+        .login-prompt {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .login-prompt .btn {
+            margin-top: 1rem;
+        }
+        
+        .cloud-bg {
+            background-color: var(--light);
         }
     </style>
 </head>
@@ -126,10 +257,6 @@
                         <a class="nav-link" href="#about">About</a>
                     </li>
                 </ul>
-                <div class="d-flex auth-buttons">
-                    <a href="#login" class="btn btn-outline-light me-2">Login</a>
-                    <a href="#signup" class="btn btn-light">Sign Up</a>
-                </div>
                 <div class="user-info d-flex align-items-center">
                     <span class="text-light me-3">Hello, <span id="user-name">User</span></span>
                     <button id="logout-btn" class="btn btn-outline-light btn-sm">Logout</button>
@@ -141,7 +268,7 @@
     <!-- Home Page -->
     <section id="home" class="page active">
         <!-- Hero Section -->
-        <div class="gradient-bg text-white py-5">
+        <div class="gradient-bg text-white py-5 hero-section">
             <div class="container py-5">
                 <div class="row align-items-center">
                     <div class="col-lg-6">
@@ -190,11 +317,20 @@
 
         <!-- Featured Events -->
         <div class="container my-5">
-            <h2 class="text-center mb-5">Featured Events</h2>
+            <h2 class="section-title">Featured Events</h2>
+            
+            <!-- Login Prompt for Non-Authenticated Users -->
+            <div class="login-prompt" id="login-prompt">
+                <h4>Login to Book Tickets</h4>
+                <p>Create an account or login to book tickets for these amazing events.</p>
+                <a href="#login" class="btn btn-primary">Login / Sign Up</a>
+            </div>
+            
             <div class="row g-4">
                 <!-- Event 1 -->
                 <div class="col-md-6 col-lg-3">
-                    <div class="card h-100 auth-required">
+                    <div class="card h-100 auth-required event-card">
+                        <div class="featured-badge">FEATURED</div>
                         <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top event-poster" alt="Burna Boy Concert">
                         <div class="auth-overlay">
                             <i class="bi bi-lock-fill display-4 mb-3"></i>
@@ -203,12 +339,15 @@
                             <a href="#login" class="btn btn-light mt-2">Login Now</a>
                         </div>
                         <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <span class="category-badge">Music</span>
+                                <span class="price-tag text-primary">KSh 2,500</span>
+                            </div>
                             <h5 class="card-title">Burna Boy Live Concert</h5>
                             <p class="card-text text-muted">Nairobi • Dec 15, 2025</p>
                             <p class="card-text">Experience the African Giant live in concert with his biggest hits.</p>
-                            <div class="mt-auto d-flex justify-content-between align-items-center">
-                                <span class="h5 text-primary mb-0">KSh 2,500</span>
-                                <button class="btn btn-primary book-btn" data-event="Burna Boy Live Concert">Book Now</button>
+                            <div class="mt-auto">
+                                <button class="btn btn-primary w-100 book-btn" data-event="Burna Boy Live Concert">Book Now</button>
                             </div>
                         </div>
                     </div>
@@ -216,7 +355,8 @@
                 
                 <!-- Event 2 -->
                 <div class="col-md-6 col-lg-3">
-                    <div class="card h-100 auth-required">
+                    <div class="card h-100 auth-required event-card">
+                        <div class="featured-badge">FEATURED</div>
                         <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top event-poster" alt="Comedy Night">
                         <div class="auth-overlay">
                             <i class="bi bi-lock-fill display-4 mb-3"></i>
@@ -225,12 +365,15 @@
                             <a href="#login" class="btn btn-light mt-2">Login Now</a>
                         </div>
                         <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <span class="category-badge">Comedy</span>
+                                <span class="price-tag text-primary">KSh 1,200</span>
+                            </div>
                             <h5 class="card-title">Comedy Night with Churchill</h5>
                             <p class="card-text text-muted">Mombasa • Nov 30, 2025</p>
                             <p class="card-text">An evening of laughter with Kenya's top comedians hosted by Churchill.</p>
-                            <div class="mt-auto d-flex justify-content-between align-items-center">
-                                <span class="h5 text-primary mb-0">KSh 1,200</span>
-                                <button class="btn btn-primary book-btn" data-event="Comedy Night with Churchill">Book Now</button>
+                            <div class="mt-auto">
+                                <button class="btn btn-primary w-100 book-btn" data-event="Comedy Night with Churchill">Book Now</button>
                             </div>
                         </div>
                     </div>
@@ -238,7 +381,8 @@
                 
                 <!-- Event 3 -->
                 <div class="col-md-6 col-lg-3">
-                    <div class="card h-100 auth-required">
+                    <div class="card h-100 auth-required event-card">
+                        <div class="featured-badge">FEATURED</div>
                         <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top event-poster" alt="Tech Conference">
                         <div class="auth-overlay">
                             <i class="bi bi-lock-fill display-4 mb-3"></i>
@@ -247,12 +391,15 @@
                             <a href="#login" class="btn btn-light mt-2">Login Now</a>
                         </div>
                         <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <span class="category-badge">Conference</span>
+                                <span class="price-tag text-primary">KSh 3,500</span>
+                            </div>
                             <h5 class="card-title">Tech Conference 2026</h5>
                             <p class="card-text text-muted">Nairobi • Jan 10, 2026</p>
                             <p class="card-text">The largest tech conference in East Africa featuring industry leaders.</p>
-                            <div class="mt-auto d-flex justify-content-between align-items-center">
-                                <span class="h5 text-primary mb-0">KSh 3,500</span>
-                                <button class="btn btn-primary book-btn" data-event="Tech Conference 2026">Book Now</button>
+                            <div class="mt-auto">
+                                <button class="btn btn-primary w-100 book-btn" data-event="Tech Conference 2026">Book Now</button>
                             </div>
                         </div>
                     </div>
@@ -260,7 +407,8 @@
                 
                 <!-- Event 4 -->
                 <div class="col-md-6 col-lg-3">
-                    <div class="card h-100 auth-required">
+                    <div class="card h-100 auth-required event-card">
+                        <div class="featured-badge">FEATURED</div>
                         <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top event-poster" alt="Football Match">
                         <div class="auth-overlay">
                             <i class="bi bi-lock-fill display-4 mb-3"></i>
@@ -269,12 +417,15 @@
                             <a href="#login" class="btn btn-light mt-2">Login Now</a>
                         </div>
                         <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <span class="category-badge">Sports</span>
+                                <span class="price-tag text-primary">KSh 800</span>
+                            </div>
                             <h5 class="card-title">Kenyan Derby Football Match</h5>
                             <p class="card-text text-muted">Nairobi • Feb 22, 2026</p>
                             <p class="card-text">Witness the biggest football rivalry in Kenya with intense action.</p>
-                            <div class="mt-auto d-flex justify-content-between align-items-center">
-                                <span class="h5 text-primary mb-0">KSh 800</span>
-                                <button class="btn btn-primary book-btn" data-event="Kenyan Derby Football Match">Book Now</button>
+                            <div class="mt-auto">
+                                <button class="btn btn-primary w-100 book-btn" data-event="Kenyan Derby Football Match">Book Now</button>
                             </div>
                         </div>
                     </div>
@@ -286,19 +437,26 @@
     <!-- Events Listing Page -->
     <section id="events" class="page d-none">
         <div class="container my-5">
-            <h1 class="mb-4">Events</h1>
+            <h1 class="section-title">Events</h1>
+            
+            <!-- Login Prompt for Non-Authenticated Users -->
+            <div class="login-prompt" id="events-login-prompt">
+                <h4>Login to Book Tickets</h4>
+                <p>Create an account or login to book tickets for these amazing events.</p>
+                <a href="#login" class="btn btn-primary">Login / Sign Up</a>
+            </div>
             
             <!-- Filters -->
             <div class="card mb-4">
                 <div class="card-body">
                     <h5 class="card-title">Filter by Category</h5>
                     <div class="d-flex flex-wrap gap-2">
-                        <button class="btn btn-outline-primary active">All Events</button>
-                        <button class="btn btn-outline-primary">Music</button>
-                        <button class="btn btn-outline-primary">Sports</button>
-                        <button class="btn btn-outline-primary">Comedy</button>
-                        <button class="btn btn-outline-primary">Festivals</button>
-                        <button class="btn btn-outline-primary">Conferences</button>
+                        <button class="btn btn-outline-primary filter-btn active">All Events</button>
+                        <button class="btn btn-outline-primary filter-btn">Music</button>
+                        <button class="btn btn-outline-primary filter-btn">Sports</button>
+                        <button class="btn btn-outline-primary filter-btn">Comedy</button>
+                        <button class="btn btn-outline-primary filter-btn">Festivals</button>
+                        <button class="btn btn-outline-primary filter-btn">Conferences</button>
                     </div>
                 </div>
             </div>
@@ -320,11 +478,14 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body d-flex flex-column h-100">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <span class="category-badge">Music</span>
+                                        <span class="price-tag text-primary">KSh 2,500</span>
+                                    </div>
                                     <h5 class="card-title">Burna Boy Live Concert</h5>
                                     <p class="card-text text-muted">Nairobi • Dec 15, 2025</p>
                                     <p class="card-text">Experience the African Giant live in concert with his biggest hits.</p>
-                                    <div class="mt-auto d-flex justify-content-between align-items-center">
-                                        <span class="h5 text-primary mb-0">KSh 2,500</span>
+                                    <div class="mt-auto">
                                         <button class="btn btn-primary book-btn" data-event="Burna Boy Live Concert">Book Ticket</button>
                                     </div>
                                 </div>
@@ -348,11 +509,14 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body d-flex flex-column h-100">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <span class="category-badge">Comedy</span>
+                                        <span class="price-tag text-primary">KSh 1,200</span>
+                                    </div>
                                     <h5 class="card-title">Comedy Night with Churchill</h5>
                                     <p class="card-text text-muted">Mombasa • Nov 30, 2025</p>
                                     <p class="card-text">An evening of laughter with Kenya's top comedians hosted by Churchill.</p>
-                                    <div class="mt-auto d-flex justify-content-between align-items-center">
-                                        <span class="h5 text-primary mb-0">KSh 1,200</span>
+                                    <div class="mt-auto">
                                         <button class="btn btn-primary book-btn" data-event="Comedy Night with Churchill">Book Ticket</button>
                                     </div>
                                 </div>
@@ -376,11 +540,14 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body d-flex flex-column h-100">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <span class="category-badge">Conference</span>
+                                        <span class="price-tag text-primary">KSh 3,500</span>
+                                    </div>
                                     <h5 class="card-title">Tech Conference 2026</h5>
                                     <p class="card-text text-muted">Nairobi • Jan 10, 2026</p>
                                     <p class="card-text">The largest tech conference in East Africa featuring industry leaders.</p>
-                                    <div class="mt-auto d-flex justify-content-between align-items-center">
-                                        <span class="h5 text-primary mb-0">KSh 3,500</span>
+                                    <div class="mt-auto">
                                         <button class="btn btn-primary book-btn" data-event="Tech Conference 2026">Book Ticket</button>
                                     </div>
                                 </div>
@@ -404,11 +571,14 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body d-flex flex-column h-100">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <span class="category-badge">Sports</span>
+                                        <span class="price-tag text-primary">KSh 800</span>
+                                    </div>
                                     <h5 class="card-title">Kenyan Derby Football Match</h5>
                                     <p class="card-text text-muted">Nairobi • Feb 22, 2026</p>
                                     <p class="card-text">Witness the biggest football rivalry in Kenya with intense action.</p>
-                                    <div class="mt-auto d-flex justify-content-between align-items-center">
-                                        <span class="h5 text-primary mb-0">KSh 800</span>
+                                    <div class="mt-auto">
                                         <button class="btn btn-primary book-btn" data-event="Kenyan Derby Football Match">Book Ticket</button>
                                     </div>
                                 </div>
@@ -466,21 +636,21 @@
                                             <input class="form-check-input me-2" type="radio" name="ticketCategory" id="regular" checked>
                                             <label class="form-check-label" for="regular">Regular</label>
                                         </div>
-                                        <span class="fw-bold">KSh 2,500</span>
+                                        <span class="fw-bold text-primary">KSh 2,500</span>
                                     </div>
                                     <div class="list-group-item d-flex justify-content-between align-items-center">
                                         <div>
                                             <input class="form-check-input me-2" type="radio" name="ticketCategory" id="vip">
                                             <label class="form-check-label" for="vip">VIP</label>
                                         </div>
-                                        <span class="fw-bold">KSh 5,000</span>
+                                        <span class="fw-bold text-primary">KSh 5,000</span>
                                     </div>
                                     <div class="list-group-item d-flex justify-content-between align-items-center">
                                         <div>
                                             <input class="form-check-input me-2" type="radio" name="ticketCategory" id="vvip">
                                             <label class="form-check-label" for="vvip">VVIP</label>
                                         </div>
-                                        <span class="fw-bold">KSh 10,000</span>
+                                        <span class="fw-bold text-primary">KSh 10,000</span>
                                     </div>
                                 </div>
                             </div>
@@ -575,7 +745,7 @@
                                 <h5 class="mb-3">Payment Method</h5>
                                 <div class="mb-4">
                                     <div class="list-group">
-                                        <div class="list-group-item">
+                                        <div class="list-group-item payment-option">
                                             <input class="form-check-input me-2" type="radio" name="paymentMethod" id="mpesa" checked>
                                             <label class="form-check-label w-100" for="mpesa">
                                                 <div class="d-flex align-items-center">
@@ -587,7 +757,7 @@
                                                 </div>
                                             </label>
                                         </div>
-                                        <div class="list-group-item">
+                                        <div class="list-group-item payment-option">
                                             <input class="form-check-input me-2" type="radio" name="paymentMethod" id="card">
                                             <label class="form-check-label w-100" for="card">
                                                 <div class="d-flex align-items-center">
@@ -599,7 +769,7 @@
                                                 </div>
                                             </label>
                                         </div>
-                                        <div class="list-group-item">
+                                        <div class="list-group-item payment-option">
                                             <input class="form-check-input me-2" type="radio" name="paymentMethod" id="paypal">
                                             <label class="form-check-label w-100" for="paypal">
                                                 <div class="d-flex align-items-center">
@@ -639,8 +809,8 @@
                             <p class="card-text mb-4">Your tickets have been successfully booked. You will receive a confirmation email shortly.</p>
                             
                             <!-- E-Ticket -->
-                            <div class="card border-primary mb-4">
-                                <div class="card-header bg-primary text-white">
+                            <div class="ticket-card mb-4">
+                                <div class="ticket-header">
                                     <h4 class="mb-0">E-Ticket</h4>
                                 </div>
                                 <div class="card-body">
@@ -769,85 +939,6 @@
         </div>
     </section>
 
-    <!-- Admin Page (Optional) -->
-    <section id="admin" class="page d-none">
-        <div class="container my-5">
-            <h1 class="mb-4">Admin Dashboard</h1>
-            
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="mb-0">Add New Event</h5>
-                </div>
-                <div class="card-body">
-                    <form>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="eventName" class="form-label">Event Name</label>
-                                <input type="text" class="form-control" id="eventName" placeholder="Enter event name">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="eventCategory" class="form-label">Category</label>
-                                <select class="form-select" id="eventCategory">
-                                    <option selected>Select category</option>
-                                    <option>Music</option>
-                                    <option>Sports</option>
-                                    <option>Comedy</option>
-                                    <option>Festivals</option>
-                                    <option>Conferences</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="eventDate" class="form-label">Date</label>
-                                <input type="date" class="form-control" id="eventDate">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="eventTime" class="form-label">Time</label>
-                                <input type="time" class="form-control" id="eventTime">
-                            </div>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="eventVenue" class="form-label">Venue</label>
-                            <input type="text" class="form-control" id="eventVenue" placeholder="Enter venue">
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="eventDescription" class="form-label">Description</label>
-                            <textarea class="form-control" id="eventDescription" rows="3" placeholder="Enter event description"></textarea>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="eventImage" class="form-label">Event Image</label>
-                            <input class="form-control" type="file" id="eventImage">
-                        </div>
-                        
-                        <div class="row mb-3">
-                            <div class="col-md-4">
-                                <label for="regularPrice" class="form-label">Regular Price (KSh)</label>
-                                <input type="number" class="form-control" id="regularPrice" placeholder="2500">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="vipPrice" class="form-label">VIP Price (KSh)</label>
-                                <input type="number" class="form-control" id="vipPrice" placeholder="5000">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="vvipPrice" class="form-label">VVIP Price (KSh)</label>
-                                <input type="number" class="form-control" id="vvipPrice" placeholder="10000">
-                            </div>
-                        </div>
-                        
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">Add Event</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer class="footer mt-5 py-5">
         <div class="container">
@@ -893,28 +984,50 @@
     <script>
         // Simple authentication system
         let currentUser = null;
-        
-        document.addEventListener('DOMContentLoaded', function() {
+
+        document.addEventListener('DOMContentLoaded', function () {
             // Check if user is logged in
             checkAuthStatus();
-            
-            // Handle navigation clicks
+
+            // Handle navigation clicks - FIXED VERSION
             document.querySelectorAll('a[href^="#"]').forEach(link => {
-                link.addEventListener('click', function(e) {
+                link.addEventListener('click', function (e) {
                     e.preventDefault();
                     
-                    const targetId = this.getAttribute('href').substring(1);
+                    const href = this.getAttribute('href');
+                    // Handle both #page and page formats
+                    const targetId = href.startsWith('#') ? href.substring(1) : href;
+                    
                     navigateToPage(targetId);
                 });
             });
-            
+
+            // Handle navbar navigation specifically
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const href = this.getAttribute('href');
+                    const targetId = href.startsWith('#') ? href.substring(1) : href;
+                    
+                    navigateToPage(targetId);
+                    
+                    // Close mobile navbar if open
+                    const navbarToggler = document.querySelector('.navbar-toggler');
+                    const navbarCollapse = document.querySelector('.navbar-collapse');
+                    if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                        navbarToggler.click();
+                    }
+                });
+            });
+
             // Handle login form submission
-            document.getElementById('login-form').addEventListener('submit', function(e) {
+            document.getElementById('login-form').addEventListener('submit', function (e) {
                 e.preventDefault();
-                
+
                 const email = document.getElementById('loginEmail').value;
                 const password = document.getElementById('loginPassword').value;
-                
+
                 // Simple validation
                 if (email && password) {
                     // Simulate login
@@ -923,84 +1036,69 @@
                         lastName: 'Name',
                         email: email
                     };
-                    
-                    // Update UI
-                    document.getElementById('user-name').textContent = currentUser.firstName;
-                    document.body.classList.add('logged-in');
-                    
-                    // Hide auth overlays
-                    document.querySelectorAll('.auth-overlay').forEach(overlay => {
-                        overlay.style.display = 'none';
-                    });
-                    
+
+                    // Update UI - This will show logout button in navbar
+                    updateAuthUI();
+
                     // Navigate to home
                     navigateToPage('home');
-                    
+
                     // Show success message
                     alert('Login successful! You can now book tickets.');
                 }
             });
-            
+
             // Handle signup form submission
-            document.getElementById('signup-form').addEventListener('submit', function(e) {
+            document.getElementById('signup-form').addEventListener('submit', function (e) {
                 e.preventDefault();
-                
+
                 const firstName = document.getElementById('firstName').value;
                 const lastName = document.getElementById('lastName').value;
                 const email = document.getElementById('signupEmail').value;
                 const password = document.getElementById('signupPassword').value;
                 const confirmPassword = document.getElementById('confirmPassword').value;
-                
+
                 // Simple validation
                 if (firstName && lastName && email && password && confirmPassword) {
                     if (password !== confirmPassword) {
                         alert('Passwords do not match!');
                         return;
                     }
-                    
+
                     // Simulate signup
                     currentUser = {
                         firstName: firstName,
                         lastName: lastName,
                         email: email
                     };
-                    
-                    // Update UI
-                    document.getElementById('user-name').textContent = currentUser.firstName;
-                    document.body.classList.add('logged-in');
-                    
-                    // Hide auth overlays
-                    document.querySelectorAll('.auth-overlay').forEach(overlay => {
-                        overlay.style.display = 'none';
-                    });
-                    
+
+                    // Update UI - This will show logout button in navbar
+                    updateAuthUI();
+
                     // Navigate to home
                     navigateToPage('home');
-                    
+
                     // Show success message
                     alert('Account created successfully! You can now book tickets.');
                 }
             });
-            
+
             // Handle logout
-            document.getElementById('logout-btn').addEventListener('click', function() {
+            document.getElementById('logout-btn').addEventListener('click', function () {
                 currentUser = null;
-                document.body.classList.remove('logged-in');
-                
-                // Show auth overlays
-                document.querySelectorAll('.auth-overlay').forEach(overlay => {
-                    overlay.style.display = 'flex';
-                });
-                
+
+                // Update UI - This will hide logout button in navbar
+                updateAuthUI();
+
                 // Navigate to home
                 navigateToPage('home');
-                
+
                 alert('You have been logged out.');
             });
-            
+
             // Handle book buttons
             document.querySelectorAll('.book-btn').forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function () {
                     if (!currentUser) {
                         // Redirect to login if not authenticated
                         navigateToPage('login');
@@ -1008,70 +1106,134 @@
                     } else {
                         // Get event data
                         const eventName = this.getAttribute('data-event');
-                        
+
                         // Update checkout page with event info
                         document.getElementById('checkout-event-title').textContent = eventName;
                         document.getElementById('confirmation-event-title').textContent = eventName;
                         document.getElementById('confirmation-user-name').textContent = currentUser.firstName + ' ' + currentUser.lastName;
-                        
+
                         // Navigate to checkout
                         navigateToPage('checkout');
                     }
                 });
             });
-            
+
             // Handle checkout form submission
-            document.getElementById('checkout-form').addEventListener('submit', function(e) {
+            document.getElementById('checkout-form').addEventListener('submit', function (e) {
                 e.preventDefault();
-                
+
                 if (!currentUser) {
                     alert('Please log in to complete your booking.');
                     navigateToPage('login');
                     return;
                 }
-                
+
                 // Generate a random ticket ID
                 const ticketId = 'EVH-' + new Date().getFullYear() + '-' + Math.floor(100000 + Math.random() * 900000);
                 document.getElementById('ticket-id').textContent = ticketId;
-                
+
                 // Navigate to confirmation page
                 navigateToPage('confirmation');
             });
+
+            // Handle filter buttons
+            document.querySelectorAll('.filter-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+            });
+            
+            // Initialize page based on URL hash
+            function initializePageFromHash() {
+                const hash = window.location.hash.substring(1);
+                if (hash) {
+                    navigateToPage(hash);
+                }
+            }
+            
+            // Handle browser back/forward buttons
+            window.addEventListener('hashchange', function() {
+                const hash = window.location.hash.substring(1);
+                if (hash) {
+                    navigateToPage(hash);
+                }
+            });
+            
+            // Initialize page on load
+            initializePageFromHash();
         });
-        
+
+        function updateAuthUI() {
+            if (currentUser) {
+                // User is logged in
+                document.body.classList.add('logged-in');
+                document.getElementById('user-name').textContent = currentUser.firstName;
+
+                // Hide auth overlays on booking elements
+                document.querySelectorAll('.auth-overlay').forEach(overlay => {
+                    overlay.style.display = 'none';
+                });
+
+                // Hide login prompts
+                document.querySelectorAll('.login-prompt').forEach(prompt => {
+                    prompt.style.display = 'none';
+                });
+            } else {
+                // User is logged out
+                document.body.classList.remove('logged-in');
+
+                // Show auth overlays on booking elements
+                document.querySelectorAll('.auth-overlay').forEach(overlay => {
+                    overlay.style.display = 'flex';
+                });
+
+                // Show login prompts
+                document.querySelectorAll('.login-prompt').forEach(prompt => {
+                    prompt.style.display = 'block';
+                });
+            }
+        }
+
         function checkAuthStatus() {
             // Check if user is logged in (in a real app, this would check with a backend)
             // For demo purposes, we'll just check the currentUser variable
             if (currentUser) {
-                document.body.classList.add('logged-in');
-                document.getElementById('user-name').textContent = currentUser.firstName;
-                
-                // Hide auth overlays
-                document.querySelectorAll('.auth-overlay').forEach(overlay => {
-                    overlay.style.display = 'none';
-                });
+                updateAuthUI();
             }
         }
-        
+
         function navigateToPage(pageId) {
+            // Update URL hash
+            window.location.hash = pageId;
+            
             // Hide all pages
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.add('d-none');
                 page.classList.remove('active');
             });
-            
+
             // Show target page
             const targetPage = document.getElementById(pageId);
             if (targetPage) {
                 targetPage.classList.remove('d-none');
                 targetPage.classList.add('active');
+                
+                // Scroll to top of page
+                window.scrollTo(0, 0);
+            } else {
+                // If page not found, show home page
+                document.getElementById('home').classList.remove('d-none');
+                document.getElementById('home').classList.add('active');
             }
-            
+
             // Update active nav link
             document.querySelectorAll('.nav-link').forEach(navLink => {
                 navLink.classList.remove('active');
             });
-            
+
             const activeNavLink = document.querySelector(`.nav-link[href="#${pageId}"]`);
             if (activeNavLink) {
                 activeNavLink.classList.add('active');
